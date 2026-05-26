@@ -24,10 +24,10 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Subs tracking application');
 });
 
-app.listen(PORT, async () => {
-  console.log(`Subscription app running in http://localhost:${PORT} port`);
+await connectToDatabase();
 
-  await connectToDatabase();
+app.listen(PORT, () => {
+  console.log(`Subscription app running in http://localhost:${PORT} port`);
 });
 
 export default app;
