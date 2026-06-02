@@ -7,7 +7,7 @@ export const createSubscription = async (req, res, next) => {
     const subscription = await Subscription.create({ ...req.body, user: req.user._id });
 
     const { workflowRunId } = await workflowClient.trigger({
-      url: `${SERVER_URL}/api/workflows/subscription/reminder`,
+      url: `${SERVER_URL}/api/v1/workflows/subscription/reminder`,
       body: {
         subscriptionId: subscription.id,
       },
@@ -19,13 +19,11 @@ export const createSubscription = async (req, res, next) => {
 
     console.log(`Workflow run ID: ${workflowRunId}`);
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: 'Subscription created successfully',
-        data: { subscription, workflowRunId },
-      });
+    res.status(201).json({
+      success: true,
+      message: 'Subscription created successfully',
+      data: { subscription, workflowRunId },
+    });
   } catch (e) {
     next(e);
   }
